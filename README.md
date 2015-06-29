@@ -1,2 +1,2 @@
-# HTMLDataExtractor
-Extracteur de donnée depuis fichiers HTML
+# TextDataExtractor
+Extracteur de donnée depuis fichiers texte
