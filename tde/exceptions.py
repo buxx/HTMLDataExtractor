@@ -1,0 +1,2 @@
+class CantMakeMatch(Exception):
+    pass

@@ -55,3 +55,14 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Idea
+.idea
+
+# TMP files
+*~
+
+# sandbox
+sandbox/
+!sandbox/dalz.py
+
