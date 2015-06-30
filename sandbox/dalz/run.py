@@ -1,4 +1,5 @@
-from sandbox.dalz.data import ArticleCommentCountFileData, AuthorArticleCountFilesData, ArticlePublicationDateFileData
+from sandbox.dalz.data import ArticleCommentCountFileData, AuthorArticleCountFilesData, ArticlePublicationDateFileData, \
+    ArticleAuthorFileData
 from sandbox.dalz.implode import ArticleImplode
 from tde.CSVExporter import CSVExporter
 from tde.Inspector import Inspector
@@ -10,7 +11,8 @@ source_directory = 'sandbox/dalz/Raw_Field_Blog/HTLML_complete/Blog_LaFraise/Blo
 # Les différentes données qui vont être extraites
 data_classes = [ArticleCommentCountFileData,
                 AuthorArticleCountFilesData,
-                ArticlePublicationDateFileData]
+                ArticlePublicationDateFileData,
+                ArticleAuthorFileData]
 
 # Création de l'objet chargé de récupérer les fichiers correspondant aux données recherchés
 inspector_lafraise = Inspector(source=source_directory,
@@ -28,3 +30,5 @@ csv_convector = CSVExporter(data_collection, implode_classes=[ArticleImplode])
 
 # Export dans le répertoire output des différentes données extraites
 csv_convector.export('sandbox/dalz/output')
+
+# TODO: Erreurs

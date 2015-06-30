@@ -3,63 +3,59 @@ from pyquery import PyQuery
 from sandbox.dalz.match import ArticleFileContentMatch
 from tde.FileData import FileData
 from tde.FilesData import FilesData
+from tde.HTMLData import HTMLData
 
 
-class ArticleCommentCountFileData(FileData):
+class ArticleFileData(FileData, HTMLData):
     _match_class = ArticleFileContentMatch
-    _subject = 'Comments_count_by_article'
+
+    def _get_data_for_text(self, text):
+        raise NotImplementedError()
+
+    def _get_text_data_name(self, text):
+        return self._extract_text(text, 'h1.entry-title')
+
+
+class ArticleCommentCountFileData(ArticleFileData):
+    _name = 'Comments_count_by_article'
     _key_name = 'Article name'
     _value_name = 'Comments count'
 
-    def _get_text_data_name(self, text):
-        d = PyQuery(text)
-        title_node = d('h1.entry-title')
-        # TODO: Si pas de title, raise ...
-        return title_node.text()
-
     def _get_data_for_text(self, text):
-        d = PyQuery(text)
-        comments_count_node = d('a.cmnt_count')
-        # TODO: Si pas ... raise
-        return re.search('^([0-9]+) Commentaires', comments_count_node.text()).group(1)
+        comments_count = self._extract_text(text, 'a.cmnt_count')
+        return re.search('^([0-9]+) Commentaires', comments_count).group(1)
 
 
-class ArticlePublicationDateFileData(FileData):
-    _match_class = ArticleFileContentMatch
+class ArticlePublicationDateFileData(ArticleFileData):
     _name = 'Article_publication_date'
     _key_name = 'Article name'
     _value_name = 'Publication date'
 
-    def _get_text_data_name(self, text):
-        d = PyQuery(text)
-        title_node = d('h1.entry-title')
-        # TODO: Si pas de title, raise ...
-        return title_node.text()
-
     def _get_data_for_text(self, text):
-        d = PyQuery(text)
-        blog_author_node = d('div.blogauthor div.left')
-        # TODO: Si pas ... raise
-        complete_author_line = blog_author_node.text()
-        # '^De\ (.)+,[.]+'
-        extract = re.search('^De\ ([a-zA-Z0-9]+), le ([0-9]{2}\.[0-9]{2}\.[0-9]{4}) à ([0-9]{2}:[0-9]{2})',
-                            blog_author_node.text())
+        blog_author = self._extract_text(text, 'div.blogauthor div.left')
+        pattern = '^De\ ([a-zA-Z0-9]+), le ([0-9]{2}\.[0-9]{2}\.[0-9]{4}) à ([0-9]{2}:[0-9]{2})'
+        extract = re.search(pattern, blog_author)
         return "%s %s" % (extract.group(2), extract.group(3))
 
 
-class AuthorArticleCountFilesData(FilesData):
-    _match_class = ArticleFileContentMatch
+class ArticleAuthorFileData(ArticleFileData):
+    _name = 'Article_author'
+    _key_name = 'Article name'
+    _value_name = 'Author name'
+
+    def _get_data_for_text(self, text):
+        blog_author = self._extract_text(text, 'div.blogauthor div.left')
+        return re.search('^De\ ([a-zA-Z0-9]+),', blog_author).group(1)
+
+
+class AuthorArticleCountFilesData(ArticleFileData):
     _name = 'Author_articles_count'
     _key_name = 'Author name'
     _value_name = 'Articles count'
 
     def _get_text_data_name(self, text):
-        d = PyQuery(text)
-        blog_author_node = d('div.blogauthor div.left')
-        # TODO: Si pas ... raise
-        complete_author_line = blog_author_node.text()
-        # '^De\ (.)+,[.]+'
-        return re.search('^De\ ([a-zA-Z0-9]+),', blog_author_node.text()).group(1)
+        blog_author = self._extract_text(text, 'div.blogauthor div.left')
+        return re.search('^De\ ([a-zA-Z0-9]+),', blog_author).group(1)
 
     def _get_data_for_text(self, text):
         return 1
