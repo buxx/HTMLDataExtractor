@@ -1,15 +1,15 @@
 class Data:
 
     _match_class = None
-    _subject = None
+    _name = None
     _key_name = 'Key'
     _value_name = 'Value'
 
     @classmethod
-    def get_subject(cls):
-        if not cls._subject:
-            raise NotImplementedError('_subject must be set')
-        return cls._subject
+    def get_name(cls):
+        if not cls._name:
+            raise NotImplementedError('_name must be set')
+        return cls._name
 
     @classmethod
     def get_match_class(cls):

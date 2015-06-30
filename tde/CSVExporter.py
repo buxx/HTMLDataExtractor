@@ -25,7 +25,7 @@ class CSVExporter(Exporter):
         for data_instance in self._data_collection.get_data_instances():
 
             data = data_instance.get_data()
-            file_name = "%s.csv" % data_instance.get_subject()
+            file_name = "%s.csv" % data_instance.get_name()
             file_path = "%s/%s" % (output_directory, file_name)
 
             # TODO: Create file and vider si existe

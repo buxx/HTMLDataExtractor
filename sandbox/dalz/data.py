@@ -26,7 +26,7 @@ class ArticleCommentCountFileData(FileData):
 
 class ArticlePublicationDateFileData(FileData):
     _match_class = ArticleFileContentMatch
-    _subject = 'Article_publication_date'
+    _name = 'Article_publication_date'
     _key_name = 'Article name'
     _value_name = 'Publication date'
 
@@ -49,7 +49,7 @@ class ArticlePublicationDateFileData(FileData):
 
 class AuthorArticleCountFilesData(FilesData):
     _match_class = ArticleFileContentMatch
-    _subject = 'Author_articles_count'
+    _name = 'Author_articles_count'
     _key_name = 'Author name'
     _value_name = 'Articles count'
 
