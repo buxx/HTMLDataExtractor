@@ -10,7 +10,7 @@ class CSVExporter(Exporter):
 
     @staticmethod
     def _get_implode_header(implode):
-        header = [implode.get_on_key()]
+        header = [implode.get_key()]
 
         for implode_data_class in implode.get_data_classes():
             header.append(implode_data_class.get_value_name())

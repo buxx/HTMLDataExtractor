@@ -63,6 +63,6 @@ target/
 *~
 
 # sandbox
-sandbox/
-!sandbox/dalz.py
-
+sandbox/dalz/Raw_Field_Blog/
+sandbox/dalz/output/*
+!sandbox/dalz/output/empty

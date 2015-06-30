@@ -2,8 +2,6 @@ class Implode:
 
     _name = None
     _data_classes = []
-    # TODO: Réellement utile ? Si non: a l'init, check de toute les dta instance pour verifier que la key est identique
-    _on_key = None
 
     @classmethod
     def get_name(cls):
@@ -17,14 +15,20 @@ class Implode:
             raise NotImplementedError()
         return cls._data_classes
 
-    @classmethod
-    def get_on_key(cls):
-        if not cls._on_key:
-            raise NotImplementedError()
-        return cls._on_key
-
     def __init__(self, data_instances):
         self._data_instances = data_instances
+
+    def get_key(self):
+        key = None
+        for data_instance in self._data_instances:
+            data_instance_key = data_instance.get_key_name()
+            if data_instance_key == key or key is None:
+                key = data_instance_key
+            else:
+                raise Exception(
+                    "Datas are not working with same key: actual is \"%s\" and key is \"%s\"" % (key,
+                                                                                                 data_instance_key))
+        return key
 
     def get_data(self):
         data = {}
