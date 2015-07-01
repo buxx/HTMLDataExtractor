@@ -38,6 +38,7 @@ class Inspector:
             x = x+1
             if x > 100:
                 raise StopIteration()
+                pass
 
             for file_name in fnmatch.filter(file_names, self._match_pattern):
                 yield os.path.join(root, file_name)
