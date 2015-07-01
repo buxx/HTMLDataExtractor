@@ -1,0 +1,10 @@
+language: python
+python:
+  - "3.4"
+install:
+  - "pip install -r tests_requirements.txt"
+  - "pip install python-coveralls"
+script: 
+  - coverage run "python3.4 -m unittest discover tests 'Test*.py'" --rcfile=.coveragerc -v && coverage report -m && python3.4 -m unittest discover tests 'Test*.py'
+after_success:
+  - coveralls
