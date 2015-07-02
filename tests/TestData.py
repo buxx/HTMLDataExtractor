@@ -17,8 +17,7 @@ class TestInspector(Base):
 
         word_count = WikipediaWordCountTextFileData()
         word_count.swallow(self._get_content_of_file('tests/src/source_files/evolution.txt'))
-        # TODO: L'ER pour compter le nb de mots est incorrecte ! Pas 9 du coups!
-        self.assertEquals({'Évolution (biologie)': 1}, word_count.get_data())
+        self.assertEquals({'Évolution (biologie)': 3378}, word_count.get_data())
 
         category_count = WikipediaCategoryCountTextFilesData()
         category_count.swallow(self._get_content_of_file('tests/src/source_files/evolution.txt'))
@@ -35,8 +34,7 @@ class TestInspector(Base):
 
         word_count = WikipediaWordCountHTMLFileData()
         word_count.swallow(self._get_content_of_file('tests/src/source_files/evolution.html'))
-        # TODO: L'ER pour compter le nb de mots est incorrecte ! Pas 9 du coups!
-        self.assertEquals({'Évolution (biologie)': 1}, word_count.get_data())
+        self.assertEquals({'Évolution (biologie)': 3460}, word_count.get_data())
 
         category_count = WikipediaCategoryCountHTMLFilesData()
         category_count.swallow(self._get_content_of_file('tests/src/source_files/evolution.html'))

@@ -1,3 +1,4 @@
+import re
 from tde.FileData import FileData
 from tde.FilesData import FilesData
 from tde.HTMLData import HTMLData
@@ -25,7 +26,7 @@ class WordCountTextFileData(TextFileData):
     _value_name = 'Word count'
 
     def _get_data_for_text(self, text):
-        return len(self._extract(text, "(\S+)*").groups())
+        return len(list(set(re.findall("(\S+)*", text))))
 
 
 class CategoryCountTextFilesData(FilesData):
@@ -65,7 +66,7 @@ class WordCountHTMLFileData(HTMLFileData):
     _value_name = 'Word count'
     def _get_data_for_text(self, text):
         content_text = self._extract_html_text(text, 'div#content')
-        return len(self._extract(content_text, "(\S+)").groups())
+        return len(list(set(re.findall("(\S+)*", content_text))))
 
 
 # TODO: Il va falloir une declinaison HTMLFilesData ?
