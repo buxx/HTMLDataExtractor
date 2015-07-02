@@ -63,7 +63,6 @@ class LetterCountHTMLFileData(TextFileData, HTMLData):
 class WordCountHTMLFileData(TextFileData):
     _name = 'Word_count_by_article'
     _value_name = 'Word count'
-# TODO: Pas generique entre wki et brita
     def _get_data_for_text(self, text):
         content_text = self._extract_html_text(text, 'div#content').text()
         return len(self._extract(content_text, "(\S+)"))
@@ -89,38 +88,46 @@ class CategoryCountHTMLFilesData(FilesData, HTMLData):
 class WikipediaLetterCountTextFileData(LetterCountTextFileData):
     _match_class = WikipediaTextFileContentMatch
 
+
 class WikipediaWordCountTextFileData(WordCountTextFileData):
     _match_class = WikipediaTextFileContentMatch
+
 
 class WikipediaCategoryCountTextFilesData(CategoryCountTextFilesData):
     _match_class = WikipediaTextFileContentMatch
 
-    
+
 class BritannicaLetterCountTextFileData(LetterCountTextFileData):
     _match_class = BritannicaTextFileContentMatch
+
 
 class BritannicaWordCountTextFileData(WordCountTextFileData):
     _match_class = BritannicaTextFileContentMatch
 
+
 class BritannicaCategoryCountTextFilesData(CategoryCountTextFilesData):
     _match_class = BritannicaTextFileContentMatch
 
-    
+
 class WikipediaLetterCountHTMLFileData(LetterCountHTMLFileData):
     _match_class = WikipediaHTMLFileContentMatch
+
 
 class WikipediaWordCountHTMLFileData(WordCountHTMLFileData):
     _match_class = WikipediaHTMLFileContentMatch
 
+
 class WikipediaCategoryCountHTMLFilesData(CategoryCountHTMLFilesData):
     _match_class = WikipediaHTMLFileContentMatch
 
-    
+
 class BritannicaLetterCountHTMLFileData(LetterCountHTMLFileData):
     _match_class = BritannicaHTMLFileContentMatch
 
+
 class BritannicaWordCountHTMLFileData(WordCountHTMLFileData):
     _match_class = BritannicaHTMLFileContentMatch
+
 
 class BritannicaCategoryCountHTMLFilesData(CategoryCountHTMLFilesData):
     _match_class = BritannicaHTMLFileContentMatch
