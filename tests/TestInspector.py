@@ -1,6 +1,7 @@
 from tde.Inspector import Inspector
 from tests.src.Base import Base
-from tests.src.match import WikipediaTextFileContentMatch, WikipediaHTMLFileContentMatch
+from tests.src.match import WikipediaTextFileContentMatch, WikipediaHTMLFileContentMatch, BritannicaTextFileContentMatch, \
+    BritannicaHTMLFileContentMatch
 
 
 class TestInspector(Base):
@@ -28,3 +29,27 @@ class TestInspector(Base):
         inspector = Inspector('tests/src/source_files', self._wikipedia_html_data_classes, match_pattern='*')
         self.assertEquals(self._wikipedia_html_files.sort(),
                           inspector.get_match_files(WikipediaHTMLFileContentMatch).sort())
+
+    def test_inspect_britannica_text(self):
+        inspector = Inspector('tests/src/source_files', self._britannica_text_data_classes, match_pattern='*.txt')
+        self.assertEquals(self._britannica_text_data_classes, inspector.get_data_classes())
+
+        self.assertEquals(self._britannica_text_files.sort(),
+                          inspector.get_match_files(BritannicaTextFileContentMatch).sort())
+
+        # With match pattern on all files, it will work to (but less speed)
+        inspector = Inspector('tests/src/source_files', self._britannica_text_data_classes, match_pattern='*')
+        self.assertEquals(self._britannica_text_files.sort(),
+                          inspector.get_match_files(BritannicaTextFileContentMatch).sort())
+
+    def test_inspect_britannica_html(self):
+        inspector = Inspector('tests/src/source_files', self._britannica_html_data_classes, match_pattern='*.html')
+        self.assertEquals(self._britannica_html_data_classes, inspector.get_data_classes())
+
+        self.assertEquals(self._britannica_html_files.sort(),
+                          inspector.get_match_files(BritannicaHTMLFileContentMatch).sort())
+
+        # With match pattern on all files, it will work to (but less speed)
+        inspector = Inspector('tests/src/source_files', self._britannica_html_data_classes, match_pattern='*')
+        self.assertEquals(self._britannica_html_files.sort(),
+                          inspector.get_match_files(BritannicaHTMLFileContentMatch).sort())

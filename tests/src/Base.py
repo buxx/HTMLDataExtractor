@@ -1,10 +1,12 @@
 import unittest
-from tests.src.data import LetterCountTextWikipediaFileData, WordTextWikipediaFileData, CategoryTextWikipediaFilesData, \
-    CategoryHTMLWikipediaFilesData, WordHTMLWikipediaFileData, LetterCountHTMLWikipediaFileData
+from tests.src.data import WikipediaLetterCountTextFileData, WikipediaWordCountTextFileData, \
+    WikipediaCategoryCountTextFilesData, WikipediaLetterCountHTMLFileData, WikipediaWordCountHTMLFileData, \
+    WikipediaCategoryCountHTMLFilesData, BritannicaLetterCountTextFileData, BritannicaWordCountTextFileData, \
+    BritannicaCategoryCountTextFilesData, BritannicaLetterCountHTMLFileData, BritannicaCategoryCountHTMLFilesData, \
+    BritannicaWordCountHTMLFileData
 
 
 class Base(unittest.TestCase):
-
     _wikipedia_text_files = ['tests/src/source_files/evolution.txt',
                              'tests/src/source_files/relativite.txt']
 
@@ -39,10 +41,18 @@ class Base(unittest.TestCase):
     _html_files.extend(_wikipedia_html_files)
     _html_files.extend(_britannica_html_files)
 
-    _wikipedia_text_data_classes = [LetterCountTextWikipediaFileData,
-                                    WordTextWikipediaFileData,
-                                    CategoryTextWikipediaFilesData]
+    _wikipedia_text_data_classes = [WikipediaLetterCountTextFileData,
+                                    WikipediaWordCountTextFileData,
+                                    WikipediaCategoryCountTextFilesData]
 
-    _wikipedia_html_data_classes = [LetterCountHTMLWikipediaFileData,
-                                    WordHTMLWikipediaFileData,
-                                    CategoryHTMLWikipediaFilesData]
+    _wikipedia_html_data_classes = [WikipediaLetterCountHTMLFileData,
+                                    WikipediaWordCountHTMLFileData,
+                                    WikipediaCategoryCountHTMLFilesData]
+
+    _britannica_text_data_classes = [BritannicaLetterCountTextFileData,
+                                     BritannicaWordCountTextFileData,
+                                     BritannicaCategoryCountTextFilesData]
+
+    _britannica_html_data_classes = [BritannicaLetterCountHTMLFileData,
+                                     BritannicaWordCountHTMLFileData,
+                                     BritannicaCategoryCountHTMLFilesData]
