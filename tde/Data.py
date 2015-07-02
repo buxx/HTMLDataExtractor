@@ -1,3 +1,7 @@
+import re
+from tde.exceptions import CantExtractData
+
+
 class Data:
 
     _match_class = None
@@ -24,6 +28,22 @@ class Data:
     @classmethod
     def get_value_name(cls):
         return cls._value_name
+
+    @classmethod
+    def _extract_text(cls, text, expression, groups=(1,), format_extract="%s"):
+        sre_match = cls._extract(expression, text)
+        if not sre_match:
+            raise CantExtractData("Expression \"%s\" not found in \"%s\"" % (expression, text))
+
+        groups_text = []
+        for group_position in groups:
+            groups_text.append(sre_match.group(group_position))
+
+        return format_extract % tuple(groups_text)
+
+    @classmethod
+    def _extract(cls, text, expression):
+        return re.search(expression, text)
 
     def __init__(self):
         self._data = {}

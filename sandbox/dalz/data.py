@@ -17,14 +17,14 @@ class ArticleFileData(FileData, HTMLData):
     _match_class = ArticleFileContentMatch
 
     def _get_text_data_name(self, text):
-        return self._extract_text(text, selector_title)
+        return self._extract_html_text(text, selector_title)
 
 
 class ArticleFilesData(FilesData, HTMLData):
     _match_class = ArticleFileContentMatch
 
     def _get_text_data_name(self, text):
-        return self._extract_text(text, selector_title)
+        return self._extract_html_text(text, selector_title)
 
 
 class ArticleAndCommentsFileData(ArticleFileData):
@@ -38,7 +38,7 @@ class ArticleCommentCountFileData(ArticleAndCommentsFileData):
 
     def _get_data_for_text(self, text):
         comments_count = self._extract_text(text, selector_comment)
-        return self._re_extract_text(comments_count, pattern_comment_count)
+        return self._re_extract_html_text(comments_count, pattern_comment_count)
 
 
 class ArticlePublicationDateFileData(ArticleFileData):
@@ -47,9 +47,9 @@ class ArticlePublicationDateFileData(ArticleFileData):
     _value_name = 'Publication date'
 
     def _get_data_for_text(self, text):
-        article_author = self._extract_text(text, selector_article_author)
+        article_author = self._extract_html_text(text, selector_article_author)
         pattern = pattern_article_publication_date
-        return self._re_extract_text(article_author, pattern, (2, 3), '%s %s')
+        return self._re_extract_html_text(article_author, pattern, (2, 3), '%s %s')
 
 
 class ArticleAuthorFileData(ArticleFileData):
@@ -58,8 +58,8 @@ class ArticleAuthorFileData(ArticleFileData):
     _value_name = 'Author name'
 
     def _get_data_for_text(self, text):
-        article_author = self._extract_text(text, selector_article_author)
-        return self._re_extract_text(article_author, pattern_article_author)
+        article_author = self._extract_html_text(text, selector_article_author)
+        return self._re_extract_html_text(article_author, pattern_article_author)
 
 
 class AuthorArticleCountFilesData(ArticleFilesData):
@@ -68,8 +68,8 @@ class AuthorArticleCountFilesData(ArticleFilesData):
     _value_name = 'Articles count'
 
     def _get_text_data_name(self, text):
-        article_author = self._extract_text(text, selector_article_author)
-        return self._re_extract_text(article_author, pattern_article_author)
+        article_author = self._extract_html_text(text, selector_article_author)
+        return self._re_extract_html_text(article_author, pattern_article_author)
 
     def _get_data_for_text(self, text):
         return 1

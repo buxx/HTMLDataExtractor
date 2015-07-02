@@ -1,9 +1,9 @@
-import unittest
+from tests.src.Base import Base
 from tests.src.match import WikipediaTextFileContentMatch, WikipediaHTMLFileContentMatch, BritannicaHTMLFileContentMatch, \
     BritannicaTextFileContentMatch
 
 
-class TestMatch(unittest.TestCase):
+class TestMatch(Base):
 
     _wikipedia_text_files = ['tests/src/source_files/evolution.txt',
                              'tests/src/source_files/relativite.txt']
