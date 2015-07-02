@@ -25,7 +25,7 @@ class WordCountTextFileData(TextFileData):
     _value_name = 'Word count'
 
     def _get_data_for_text(self, text):
-        return len(self._extract_text(text, "(\S+)"))
+        return len(self._extract(text, "(\S+)*").groups())
 
 
 class CategoryCountTextFilesData(FilesData):
@@ -51,23 +51,24 @@ class HTMLFileData(FileData, HTMLData):
         return self._extract_html_text(text, 'h1.firstHeading')
 
 
-class LetterCountHTMLFileData(TextFileData, HTMLData):
+class LetterCountHTMLFileData(HTMLFileData, HTMLData):
     _name = 'Letter_count_by_article'
     _value_name = 'Letter count'
 
     def _get_data_for_text(self, text):
-        content_text = self._extract_html_text(text, 'div#content').text()
+        content_text = self._extract_html_text(text, 'div#content')
         return len(content_text) - content_text.count(' ')
 
 
-class WordCountHTMLFileData(TextFileData):
+class WordCountHTMLFileData(HTMLFileData):
     _name = 'Word_count_by_article'
     _value_name = 'Word count'
     def _get_data_for_text(self, text):
-        content_text = self._extract_html_text(text, 'div#content').text()
-        return len(self._extract(content_text, "(\S+)"))
+        content_text = self._extract_html_text(text, 'div#content')
+        return len(self._extract(content_text, "(\S+)").groups())
 
 
+# TODO: Il va falloir une declinaison HTMLFilesData ?
 class CategoryCountHTMLFilesData(FilesData, HTMLData):
     _match_class = WikipediaHTMLFileContentMatch
     _name = 'Category_of_articles_count'

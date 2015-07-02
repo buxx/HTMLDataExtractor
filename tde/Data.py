@@ -31,9 +31,9 @@ class Data:
 
     @classmethod
     def _extract_text(cls, text, expression, groups=(1,), format_extract="%s"):
-        sre_match = cls._extract(expression, text)
+        sre_match = cls._extract(text, expression)
         if not sre_match:
-            raise CantExtractData("Expression \"%s\" not found in \"%s\"" % (expression, text))
+            raise CantExtractData("Expression \"%s\" not found" % (expression,))
 
         groups_text = []
         for group_position in groups:
