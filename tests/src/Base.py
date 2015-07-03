@@ -19,6 +19,8 @@ class Base(unittest.TestCase):
     _britannica_html_files = ['tests/src/source_files/gods_and_goddesses.html',
                               'tests/src/source_files/poisonous.html']
 
+    _other_text_files = ['tests/src/source_files/aubergines_farcies.txt']
+
     _all_files = []
     _all_files.extend(_wikipedia_text_files)
     _all_files.extend(_britannica_text_files)

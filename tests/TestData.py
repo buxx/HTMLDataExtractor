@@ -1,3 +1,4 @@
+from tde.exceptions import CantExtractData
 from tests.src.Base import Base
 from tests.src.data import WikipediaLetterCountTextFileData, WikipediaWordCountTextFileData, \
     WikipediaCategoryCountTextFilesData, WikipediaLetterCountHTMLFileData, WikipediaWordCountHTMLFileData, \
@@ -44,6 +45,11 @@ class TestInspector(Base):
         category_count.swallow(self._get_content_of_file('tests/src/source_files/poisonous.html'))
         self.assertEquals({'Nature': 1, 'Science': 2}, category_count.get_data())
 
-    def test_not_found(self):
-        # Tester quand on check un fichier qui a rien avoir: raise
-        pass
+    def test_cant_extract(self):
+        letter_count = WikipediaLetterCountHTMLFileData()
+        courgettes_farcies_text = self._get_content_of_file('tests/src/source_files/aubergines_farcies.txt')
+        try:
+            letter_count.swallow(courgettes_farcies_text)
+            self.assertTrue(False, 'Should fail')  # assertRaises not work ... ?
+        except CantExtractData:
+            self.assertTrue(True)
