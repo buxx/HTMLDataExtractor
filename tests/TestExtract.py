@@ -50,3 +50,22 @@ class TestExtract(Base):
 
         data_collection = self._get_data_collection(self._britannica_html_data_classes, '*.html')
         self.assertDictEqual(expected_value, data_collection.get_raw_data())
+
+    def test_wikipedia_and_britannica_text_data(self):
+        expected_value = {'Category_of_articles_count': {'Nature': 1, 'Religion': 1, 'Science': 2},
+                          'Letter_count_by_article': {' Britannica Brush-ups: 12 Greek Gods and Goddesses': 6189,
+                                                      '7 of the World’s Most Poisonous Mushrooms': 4650,
+                                                      'Relativité restreinte': 71720,
+                                                      'Évolution (biologie)': 55251},
+                          'Word_count_by_article': {' Britannica Brush-ups: 12 Greek Gods and Goddesses': 573,
+                                                    '7 of the World’s Most Poisonous Mushrooms': 413,
+                                                    'Relativité restreinte': 3638,
+                                                    'Évolution (biologie)': 3378}}
+
+        inspector_text = self._get_inspector(self._wikipedia_text_data_classes, '*.txt')
+        inspector_html = self._get_inspector(self._britannica_text_data_classes, '*.txt')
+
+        extractor = self._get_extractor([inspector_text, inspector_html])
+        data_collection = extractor.extract()
+        self.maxDiff = 2048
+        self.assertDictEqual(expected_value, data_collection.get_raw_data())

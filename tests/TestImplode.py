@@ -44,3 +44,6 @@ class TestImplode(Base):
             'Britannica Brush-ups: 12 Greek Gods and Goddesses': [6724, 615, 'Britannica'],
             '7 of the World’s Most Poisonous Mushrooms': [5172, 455, 'Britannica']
         }, implode.get_data())
+
+    def test_wikipedia_and_britannica_text_implode(self):
+        pass
