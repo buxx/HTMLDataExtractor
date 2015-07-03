@@ -12,8 +12,8 @@ checks:
         format_bad_whitespace: true
         format_multiple_statements: true
         basic_invalid_name:
-            functions: '[a-z_][a-z0-9_]{2,30}$'
-            variables: '[a-z_][a-z0-9_]{2,30}$'
+            functions: '[a-z_][a-z0-9_]{2,42}$'
+            variables: '[a-z_][a-z0-9_]{2,42}$'
             whitelisted_names: 'i,j,k,ex,Run,_'
             constants: '(([A-Z_][A-Z0-9_]*)|(__.*__))$'
             attributes: '[a-z_][a-z0-9_]{2,30}$'
