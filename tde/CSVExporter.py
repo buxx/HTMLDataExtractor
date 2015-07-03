@@ -3,19 +3,13 @@ import csv
 
 
 class CSVExporter(Exporter):
+    """
+    TODO: Refactoriser le contenu de cette classe
+    """
 
     @staticmethod
     def _get_data_instance_header(data_instance):
         return [data_instance.get_key_name(), data_instance.get_value_name()]
-
-    @staticmethod
-    def _get_implode_header(implode):
-        header = [implode.get_key()]
-
-        for implode_data_class in implode.get_data_classes():
-            header.append(implode_data_class.get_value_name())
-
-        return header
 
     def export(self, output_directory):
         self.export_data_instances(output_directory)
@@ -41,14 +35,13 @@ class CSVExporter(Exporter):
         for implode_class in self._implode_classes:
             implode_data_instances = self._get_data_instance_where_class_are(implode_class.get_data_classes())
             implode = implode_class(implode_data_instances)
-            implode_header = self._get_implode_header(implode)
 
             file_name = "%s.csv" % implode.get_name()
             file_path = "%s/%s" % (output_directory, file_name)
 
             with open(file_path, 'w') as csv_file:
                 writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_ALL)
-                writer.writerow(implode_header)
+                writer.writerow(implode.get_header())
 
                 implode_data = implode.get_data()
                 for data_key in implode_data:

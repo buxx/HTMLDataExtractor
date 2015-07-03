@@ -1,4 +1,7 @@
+from collections import OrderedDict
 import unittest
+from tde.Extractor import Extractor
+from tde.Inspector import Inspector
 from tests.src.data import WikipediaLetterCountTextFileData, WikipediaWordCountTextFileData, \
     WikipediaCategoryCountTextFilesData, WikipediaLetterCountHTMLFileData, WikipediaWordCountHTMLFileData, \
     WikipediaCategoryCountHTMLFilesData, BritannicaLetterCountTextFileData, BritannicaWordCountTextFileData, \
@@ -58,3 +61,17 @@ class Base(unittest.TestCase):
     _britannica_html_data_classes = [BritannicaLetterCountHTMLFileData,
                                      BritannicaWordCountHTMLFileData,
                                      BritannicaCategoryCountHTMLFilesData]
+
+
+    def _get_inspector(self, data_classes, match_pattern):
+        return Inspector(source='tests/src/source_files',
+                         data_classes=data_classes,
+                         match_pattern=match_pattern)
+
+    def _get_extractor(self, inspectors):
+        return Extractor(inspectors=inspectors)
+
+    def _get_data_collection(self, data_classes, match_pattern):
+        inspector = self._get_inspector(data_classes, match_pattern)
+        extractor = self._get_extractor([inspector])
+        return extractor.extract()

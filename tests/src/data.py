@@ -5,12 +5,24 @@ from tde.HTMLData import HTMLData
 from tests.src.match import WikipediaTextFileContentMatch, WikipediaHTMLFileContentMatch, \
     BritannicaTextFileContentMatch, BritannicaHTMLFileContentMatch
 
+wikipedia_text_data_name_pattern = '^(.*), depuis Wikipédia.'
+britannica_text_data_name_pattern = '^(.*), from britannica.com.'
+
+wikipedia_html_data_name_pattern = 'h1#firstHeading'
+britannica_html_data_name_pattern = 'div#content > div > h1'
+
 
 class TextFileData(FileData):
     _key_name = 'Article name'
+    _data_name_pattern = None
+
+    def _get_data_name_pattern(self):
+        if self._data_name_pattern is None:
+            raise NotImplementedError()
+        return self._data_name_pattern
 
     def _get_text_data_name(self, text):
-        return self._extract_text(text, '^(.*), depuis Wikipédia.')
+        return self._extract_text(text, self._get_data_name_pattern())
 
 
 class LetterCountTextFileData(TextFileData):
@@ -44,12 +56,10 @@ class CategoryCountTextFilesData(FilesData):
         return actual_data + new_data
 
 
-class HTMLFileData(FileData, HTMLData):
-    _match_class = WikipediaHTMLFileContentMatch
-    _key_name = 'Article name'
+class HTMLFileData(TextFileData, HTMLData):
 
     def _get_text_data_name(self, text):
-        return self._extract_html_text(text, 'h1.firstHeading')
+        return self._extract_html_text(text, self._get_data_name_pattern())
 
 
 class LetterCountHTMLFileData(HTMLFileData, HTMLData):
@@ -89,47 +99,80 @@ class CategoryCountHTMLFilesData(FilesData, HTMLData):
 
 class WikipediaLetterCountTextFileData(LetterCountTextFileData):
     _match_class = WikipediaTextFileContentMatch
+    _data_name_pattern = wikipedia_text_data_name_pattern
 
 
 class WikipediaWordCountTextFileData(WordCountTextFileData):
     _match_class = WikipediaTextFileContentMatch
+    _data_name_pattern = wikipedia_text_data_name_pattern
 
 
 class WikipediaCategoryCountTextFilesData(CategoryCountTextFilesData):
     _match_class = WikipediaTextFileContentMatch
+    _data_name_pattern = wikipedia_text_data_name_pattern
 
 
 class BritannicaLetterCountTextFileData(LetterCountTextFileData):
     _match_class = BritannicaTextFileContentMatch
+    _data_name_pattern = britannica_text_data_name_pattern
 
 
 class BritannicaWordCountTextFileData(WordCountTextFileData):
     _match_class = BritannicaTextFileContentMatch
+    _data_name_pattern = britannica_text_data_name_pattern
 
 
 class BritannicaCategoryCountTextFilesData(CategoryCountTextFilesData):
     _match_class = BritannicaTextFileContentMatch
+    _data_name_pattern = britannica_text_data_name_pattern
 
 
 class WikipediaLetterCountHTMLFileData(LetterCountHTMLFileData):
     _match_class = WikipediaHTMLFileContentMatch
+    _data_name_pattern = wikipedia_html_data_name_pattern
 
 
 class WikipediaWordCountHTMLFileData(WordCountHTMLFileData):
     _match_class = WikipediaHTMLFileContentMatch
+    _data_name_pattern = wikipedia_html_data_name_pattern
 
 
 class WikipediaCategoryCountHTMLFilesData(CategoryCountHTMLFilesData):
     _match_class = WikipediaHTMLFileContentMatch
+    _data_name_pattern = wikipedia_html_data_name_pattern
 
 
 class BritannicaLetterCountHTMLFileData(LetterCountHTMLFileData):
     _match_class = BritannicaHTMLFileContentMatch
+    _data_name_pattern = britannica_html_data_name_pattern
 
 
 class BritannicaWordCountHTMLFileData(WordCountHTMLFileData):
     _match_class = BritannicaHTMLFileContentMatch
+    _data_name_pattern = britannica_html_data_name_pattern
 
 
 class BritannicaCategoryCountHTMLFilesData(CategoryCountHTMLFilesData):
     _match_class = BritannicaHTMLFileContentMatch
+    _data_name_pattern = britannica_html_data_name_pattern
+
+
+class WikipediaSourceTextFileData(TextFileData):
+    _match_class = WikipediaTextFileContentMatch
+    _data_name_pattern = wikipedia_text_data_name_pattern
+    _value_name = 'Source'
+
+    def swallow(self, text):
+        super().swallow(text)
+
+    def _get_data_for_text(self, text):
+        return 'Wikipédia'
+
+
+class BritannicaSourceTextFileData(TextFileData):
+    _match_class = BritannicaHTMLFileContentMatch
+    _data_name_pattern = britannica_text_data_name_pattern
+    _value_name = 'Source'
+
+    def _get_data_for_text(self, text):
+        return 'Britannica'

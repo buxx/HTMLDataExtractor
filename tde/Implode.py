@@ -43,3 +43,11 @@ class Implode:
                 data[data_instance_key].append(data_instance_value)
 
         return data
+
+    def get_header(self):
+        header = [self.get_key()]
+
+        for data_class in self.get_data_classes():
+            header.append(data_class.get_value_name())
+
+        return header
