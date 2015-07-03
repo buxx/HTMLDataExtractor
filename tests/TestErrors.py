@@ -9,7 +9,9 @@ from tests.src.match import WikipediaHTMLFileContentMatch
 class TestErrors(Base):
 
     def test_cant_match(self):
-        self.assertRaises(CantMakeMatch, WikipediaHTMLFileContentMatch, 'tests/src/source_files_errors/error_unicode.html')
+        self.assertRaises(CantMakeMatch,
+                          WikipediaHTMLFileContentMatch,
+                          'tests/src/source_files_errors/error_unicode.html')
 
     def test_cant_extract(self):
         wikipedia_html_data = WikipediaSourceHTMLFileData()
