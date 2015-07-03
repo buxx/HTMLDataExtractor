@@ -4,7 +4,7 @@ import csv
 
 class CSVExporter(Exporter):
     """
-    TODO: Refactoriser le contenu de cette classe
+    TODO: Refactoriser le contenu de cette classe + remonter dans Exporter
     """
 
     @staticmethod
@@ -14,6 +14,7 @@ class CSVExporter(Exporter):
     def export(self, output_directory):
         self.export_data_instances(output_directory)
         self.export_implodes(output_directory)
+        self.export_errors(output_directory)
 
     def export_data_instances(self, output_directory):
         for data_instance in self._data_collection.get_data_instances():
@@ -58,3 +59,11 @@ class CSVExporter(Exporter):
                 data_instances.append(data_instance)
 
         return data_instances
+
+    def export_errors(self, output_directory):
+        with open(output_directory + '/errors.csv', 'w') as csv_file:
+            writer = csv.writer(csv_file, delimiter=',', quoting=csv.QUOTE_ALL)
+            writer.writerow(('File path', 'Action', 'Error'))
+
+            for error in self._data_collection.get_errors():
+                writer.writerow(error.get_as_tuple())

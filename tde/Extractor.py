@@ -1,4 +1,6 @@
 from tde.DataCollection import DataCollection
+from tde.Error import Error
+from tde.exceptions import CantExtractData
 
 
 class Extractor:
@@ -17,13 +19,19 @@ class Extractor:
 
     def extract(self):
         data_collection = DataCollection(self._get_data_instances())
+        errors = []
 
         for inspector in self._inspectors:
             for data_instance in data_collection.get_data_instances():
                 for file_path in inspector.get_match_files(data_instance.get_match_class()):
                     with open(file_path, 'r') as file_content:
-                        data_instance.swallow(file_content.read())
+                        try:
+                            data_instance.swallow(file_content.read())
+                        except CantExtractData as exc:
+                            inspector.add_error(Error(file_path, Error.ACTION_DATA, exc))
+            errors.extend(inspector.get_errors())
 
+        data_collection.set_errors(errors)
         return data_collection
 
     def _get_files(self):

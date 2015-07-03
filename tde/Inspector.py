@@ -1,5 +1,6 @@
 import fnmatch
 import os
+from tde.Error import Error
 from tde.exceptions import CantMakeMatch
 
 
@@ -11,7 +12,7 @@ class Inspector:
         self._match_pattern = match_pattern
         self._data_classes = data_classes
         self._match_files = {}
-        self._files_errors = {}
+        self._errors = []
         self._inspect_files()
 
     def _inspect_files(self):
@@ -37,7 +38,7 @@ class Inspector:
 
             x = x+1
             if x > 100:
-                raise StopIteration()
+                #raise StopIteration()
                 pass
 
             for file_name in fnmatch.filter(file_names, self._match_pattern):
@@ -49,8 +50,7 @@ class Inspector:
             if matcher.match():
                 self._add_match(match_class, file_path)
         except CantMakeMatch as exc:
-            self._files_errors[file_path] = exc
-            return False
+            self._errors.append(Error(file_path, Error.ACTION_MATCH, exc))
 
     def _add_match(self, match_class, file_path):
         if match_class not in self._match_files:
@@ -60,8 +60,11 @@ class Inspector:
     def get_data_classes(self):
         return self._data_classes
 
-    def get_file_errors(self):
-        return self._files_errors
+    def get_errors(self):
+        return self._errors
+
+    def add_error(self, error):
+        self._errors.append(error)
 
     def get_match_files(self, match_class):
         if match_class not in self._match_files:

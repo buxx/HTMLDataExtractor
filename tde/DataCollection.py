@@ -2,6 +2,7 @@ class DataCollection:
 
     def __init__(self, data_instances=[]):
         self._data_instances = data_instances
+        self._errors = []
 
     def add_data_instances(self, data_instances):
         self._data_instances.extend(data_instances)
@@ -18,3 +19,9 @@ class DataCollection:
             else:
                 raw_data[data_instance_name].update(data_instance.get_data())
         return raw_data
+
+    def set_errors(self, errors):
+        self._errors = errors
+
+    def get_errors(self):
+        return self._errors
