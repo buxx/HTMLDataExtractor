@@ -162,16 +162,31 @@ class WikipediaSourceTextFileData(TextFileData):
     _data_name_pattern = wikipedia_text_data_name_pattern
     _value_name = 'Source'
 
-    def swallow(self, text):
-        super().swallow(text)
-
     def _get_data_for_text(self, text):
         return 'Wikipédia'
 
 
 class BritannicaSourceTextFileData(TextFileData):
-    _match_class = BritannicaHTMLFileContentMatch
+    _match_class = BritannicaTextFileContentMatch
     _data_name_pattern = britannica_text_data_name_pattern
+    _value_name = 'Source'
+
+    def _get_data_for_text(self, text):
+        return 'Britannica'
+
+
+class WikipediaSourceHTMLFileData(HTMLFileData):
+    _match_class = WikipediaHTMLFileContentMatch
+    _data_name_pattern = wikipedia_html_data_name_pattern
+    _value_name = 'Source'
+
+    def _get_data_for_text(self, text):
+        return 'Wikipédia'
+
+
+class BritannicaSourceHTMLFileData(HTMLFileData):
+    _match_class = BritannicaHTMLFileContentMatch
+    _data_name_pattern = britannica_html_data_name_pattern
     _value_name = 'Source'
 
     def _get_data_for_text(self, text):

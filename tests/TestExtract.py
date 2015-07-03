@@ -48,6 +48,5 @@ class TestExtract(Base):
                                       'Britannica Brush-ups: 12 Greek Gods and Goddesses': 615}
         }
 
-        self.maxDiff = 2048
         data_collection = self._get_data_collection(self._britannica_html_data_classes, '*.html')
         self.assertDictEqual(expected_value, data_collection.get_raw_data())

@@ -1,6 +1,8 @@
 from tde.Implode import Implode
 from tests.src.data import WikipediaLetterCountTextFileData, WikipediaWordCountTextFileData, WikipediaSourceTextFileData, \
-    BritannicaLetterCountTextFileData, BritannicaWordCountTextFileData, BritannicaSourceTextFileData
+    BritannicaLetterCountTextFileData, BritannicaWordCountTextFileData, BritannicaSourceTextFileData, \
+    WikipediaLetterCountHTMLFileData, WikipediaWordCountHTMLFileData, BritannicaLetterCountHTMLFileData, \
+    BritannicaWordCountHTMLFileData, WikipediaSourceHTMLFileData, BritannicaSourceHTMLFileData
 
 
 class WikipediaTextArticleImplode(Implode):
@@ -15,6 +17,20 @@ class BritannicaTextArticleImplode(Implode):
     _data_classes = (BritannicaLetterCountTextFileData,
                      BritannicaWordCountTextFileData,
                      BritannicaSourceTextFileData)
+
+
+class WikipediaHTMLArticleImplode(Implode):
+    _name = 'Wikipedia_Articles'
+    _data_classes = (WikipediaLetterCountHTMLFileData,
+                     WikipediaWordCountHTMLFileData,
+                     WikipediaSourceHTMLFileData)
+
+
+class BritannicaHTMLArticleImplode(Implode):
+    _name = 'Britannica_Articles'
+    _data_classes = (BritannicaLetterCountHTMLFileData,
+                     BritannicaWordCountHTMLFileData,
+                     BritannicaSourceHTMLFileData)
 
 # TODO: Confondre des sources entre elles ?
 # class ArticleImplode(Implode):
