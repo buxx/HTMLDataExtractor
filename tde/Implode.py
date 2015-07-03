@@ -31,18 +31,27 @@ class Implode:
         return key
 
     def get_data(self):
-        data = {}
+        data = self._get_empty_data()
+        for data_instance in self._data_instances:
+            data_instance_data = data_instance.get_data()
+            for wanted_key in data:
+                if wanted_key in data_instance_data:
+                    data_instance_value = data_instance_data[wanted_key]
+                    data[wanted_key].append(data_instance_value)
+                else:
+                    data[wanted_key].append(None)
+
+        return data
+
+    def _get_empty_data(self):
+        empty_data = {}
         for data_instance in self._data_instances:
             data_instance_data = data_instance.get_data()
             for data_instance_key in data_instance_data:
-                data_instance_value = data_instance_data[data_instance_key]
+                if data_instance_key not in empty_data:
+                    empty_data[data_instance_key] = []
 
-                if data_instance_key not in data:
-                    data[data_instance_key] = []
-
-                data[data_instance_key].append(data_instance_value)
-
-        return data
+        return empty_data
 
     def get_header(self):
         header = [self.get_key()]

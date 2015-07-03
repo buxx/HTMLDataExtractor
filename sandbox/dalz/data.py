@@ -37,8 +37,8 @@ class ArticleCommentCountFileData(ArticleAndCommentsFileData):
     _value_name = 'Comments count'
 
     def _get_data_for_text(self, text):
-        comments_count = self._extract_text(text, selector_comment)
-        return self._re_extract_html_text(comments_count, pattern_comment_count)
+        comments_count = self._extract_html_text(text, selector_comment)
+        return self._extract_text(comments_count, pattern_comment_count)
 
 
 class ArticlePublicationDateFileData(ArticleFileData):
@@ -48,8 +48,7 @@ class ArticlePublicationDateFileData(ArticleFileData):
 
     def _get_data_for_text(self, text):
         article_author = self._extract_html_text(text, selector_article_author)
-        pattern = pattern_article_publication_date
-        return self._re_extract_html_text(article_author, pattern, (2, 3), '%s %s')
+        return self._extract_text(article_author, pattern_article_publication_date, (2, 3), '%s %s')
 
 
 class ArticleAuthorFileData(ArticleFileData):
@@ -59,7 +58,7 @@ class ArticleAuthorFileData(ArticleFileData):
 
     def _get_data_for_text(self, text):
         article_author = self._extract_html_text(text, selector_article_author)
-        return self._re_extract_html_text(article_author, pattern_article_author)
+        return self._extract_text(article_author, pattern_article_author)
 
 
 class AuthorArticleCountFilesData(ArticleFilesData):
@@ -69,7 +68,7 @@ class AuthorArticleCountFilesData(ArticleFilesData):
 
     def _get_text_data_name(self, text):
         article_author = self._extract_html_text(text, selector_article_author)
-        return self._re_extract_html_text(article_author, pattern_article_author)
+        return self._extract_text(article_author, pattern_article_author)
 
     def _get_data_for_text(self, text):
         return 1
