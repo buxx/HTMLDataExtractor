@@ -12,5 +12,9 @@ class DataCollection:
     def get_raw_data(self):
         raw_data = {}
         for data_instance in self.get_data_instances():
-            raw_data[data_instance.get_name()] = data_instance.get_data()
+            data_instance_name = data_instance.get_name()
+            if data_instance_name not in raw_data:
+                raw_data[data_instance_name] = data_instance.get_data()
+            else:
+                raw_data[data_instance_name].update(data_instance.get_data())
         return raw_data
