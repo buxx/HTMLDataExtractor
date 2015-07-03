@@ -48,8 +48,4 @@ class TestInspector(Base):
     def test_cant_extract(self):
         letter_count = WikipediaLetterCountHTMLFileData()
         courgettes_farcies_text = self._get_content_of_file('tests/src/source_files/aubergines_farcies.txt')
-        try:
-            letter_count.swallow(courgettes_farcies_text)
-            self.assertTrue(False, 'Should fail')  # assertRaises not work ... ?
-        except CantExtractData:
-            self.assertTrue(True)
+        self.assertRaises(CantExtractData, letter_count.swallow, courgettes_farcies_text)
