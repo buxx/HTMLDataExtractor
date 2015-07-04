@@ -1,6 +1,6 @@
 import re
 from tde.FileData import FileData
-from tde.FilesData import FilesData
+from tde.FilesData import FilesData as BaseFilesData
 from tde.HTMLData import HTMLData
 from tests.src.match import WikipediaTextFileContentMatch, WikipediaHTMLFileContentMatch, \
     BritannicaTextFileContentMatch, BritannicaHTMLFileContentMatch
@@ -23,6 +23,15 @@ class TextFileData(FileData):
 
     def _get_text_data_name(self, text):
         return self._extract_text(text, self._get_data_name_pattern())
+
+
+class FilesData(BaseFilesData, HTMLData):
+    _data_name_pattern = None
+
+    def _get_data_name_pattern(self):
+        if self._data_name_pattern is None:
+            raise NotImplementedError()
+        return self._data_name_pattern
 
 
 class LetterCountTextFileData(TextFileData):
@@ -50,14 +59,18 @@ class CategoryCountTextFilesData(FilesData):
         return self._extract_text(text, 'Catégorie: (\S+).')
 
     def _get_data_for_text(self, text):
-        return 1
+        if self._can_take_into_account_text(text):
+            return 1
+        return 0
+
+    def _get_text_identifier(self, text):
+        return self._extract_text(text, self._get_data_name_pattern())
 
     def _add_data(self, actual_data, new_data):
         return actual_data + new_data
 
 
 class HTMLFileData(TextFileData, HTMLData):
-
     def _get_text_data_name(self, text):
         return self._extract_html_text(text, self._get_data_name_pattern())
 
@@ -79,7 +92,6 @@ class WordCountHTMLFileData(HTMLFileData):
         return len(list(set(re.findall("(\S+)*", content_text))))
 
 
-# TODO: Il va falloir une declinaison HTMLFilesData ?
 class CategoryCountHTMLFilesData(FilesData, HTMLData):
     _match_class = WikipediaHTMLFileContentMatch
     _name = 'Category_of_articles_count'
@@ -91,7 +103,12 @@ class CategoryCountHTMLFilesData(FilesData, HTMLData):
         return meta_category.attr('content')
 
     def _get_data_for_text(self, text):
-        return 1
+        if self._can_take_into_account_text(text):
+            return 1
+        return 0
+
+    def _get_text_identifier(self, text):
+        return self._extract_html_text(text, self._get_data_name_pattern())
 
     def _add_data(self, actual_data, new_data):
         return actual_data + new_data

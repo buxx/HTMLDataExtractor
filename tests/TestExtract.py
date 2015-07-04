@@ -69,3 +69,12 @@ class TestExtract(Base):
         data_collection = extractor.extract()
         self.maxDiff = 2048
         self.assertDictEqual(expected_value, data_collection.get_raw_data())
+
+    def test_britannica_text_duplicate_content_data(self):
+
+        expected_value = {'Nature': 1, 'Religion': 1}
+
+        data_collection = self._get_data_collection(self._britannica_text_data_classes, '*.txt',
+                                                    source='tests/src/source_duplicate_files')
+        raw_data = data_collection.get_raw_data()
+        self.assertDictEqual(expected_value, raw_data['Category_of_articles_count'])

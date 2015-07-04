@@ -83,7 +83,12 @@ class AuthorArticleCountFilesData(ArticleFilesData):
         return self._extract_text(article_author, pattern_article_author)
 
     def _get_data_for_text(self, text):
-        return 1
+        if self._can_take_into_account_text(text):
+            return 1
+        return 0
+
+    def _get_text_identifier(self, text):
+        return self._extract_html_text(text, selector_title)
 
     def _add_data(self, actual_data, new_data):
         return actual_data + new_data

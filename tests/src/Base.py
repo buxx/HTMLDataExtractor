@@ -63,15 +63,15 @@ class Base(unittest.TestCase):
                                      BritannicaCategoryCountHTMLFilesData]
 
 
-    def _get_inspector(self, data_classes, match_pattern):
-        return Inspector(source='tests/src/source_files',
+    def _get_inspector(self, data_classes, match_pattern, source='tests/src/source_files'):
+        return Inspector(source=source,
                          data_classes=data_classes,
                          match_pattern=match_pattern)
 
     def _get_extractor(self, inspectors):
         return Extractor(inspectors=inspectors)
 
-    def _get_data_collection(self, data_classes, match_pattern):
-        inspector = self._get_inspector(data_classes, match_pattern)
+    def _get_data_collection(self, data_classes, match_pattern, source='tests/src/source_files'):
+        inspector = self._get_inspector(data_classes, match_pattern, source=source)
         extractor = self._get_extractor([inspector])
         return extractor.extract()

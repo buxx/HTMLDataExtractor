@@ -25,8 +25,6 @@ class TestInspector(Base):
         self.assertEquals({'Science': 1}, category_count.get_data())
         category_count.swallow(self._get_content_of_file('tests/src/source_files/relativite.txt'))
         self.assertEquals({'Science': 2}, category_count.get_data())
-        category_count.swallow(self._get_content_of_file('tests/src/source_files/poisonous.txt'))
-        self.assertEquals({'Nature': 1, 'Science': 2}, category_count.get_data())
 
     def test_wikipedia_html_data(self):
         letter_count = WikipediaLetterCountHTMLFileData()
@@ -42,8 +40,6 @@ class TestInspector(Base):
         self.assertEquals({'Science': 1}, category_count.get_data())
         category_count.swallow(self._get_content_of_file('tests/src/source_files/relativite.html'))
         self.assertEquals({'Science': 2}, category_count.get_data())
-        category_count.swallow(self._get_content_of_file('tests/src/source_files/poisonous.html'))
-        self.assertEquals({'Nature': 1, 'Science': 2}, category_count.get_data())
 
     def test_cant_extract(self):
         letter_count = WikipediaLetterCountHTMLFileData()
