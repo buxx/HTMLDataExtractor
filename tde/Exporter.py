@@ -4,5 +4,5 @@ class Exporter:
         self._data_collection = data_collection
         self._implode_classes = implode_classes
 
-    def export(self, output_directory):
+    def export(self, output_directory, data_instances=True, implodes=True, errors=True):
         raise NotImplementedError()

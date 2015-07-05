@@ -11,10 +11,13 @@ class CSVExporter(Exporter):
     def _get_data_instance_header(data_instance):
         return [data_instance.get_key_name(), data_instance.get_value_name()]
 
-    def export(self, output_directory):
-        self.export_data_instances(output_directory)
-        self.export_implodes(output_directory)
-        self.export_errors(output_directory)
+    def export(self, output_directory, data_instances=True, implodes=True, errors=True):
+        if data_instances:
+            self.export_data_instances(output_directory)
+        if implodes:
+            self.export_implodes(output_directory)
+        if errors:
+            self.export_errors(output_directory)
 
     def export_data_instances(self, output_directory):
         for data_instance in self._data_collection.get_data_instances():

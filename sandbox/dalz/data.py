@@ -2,6 +2,7 @@ import re
 from sandbox.dalz.match import ArticleFileContentMatch, ArticleAndCommentsFileContentMatch
 from tde.FileData import FileData
 from tde.FilesData import FilesData
+from tde.FilesDatas import FilesDatas
 from tde.HTMLData import HTMLData
 from datetime import datetime
 
@@ -29,6 +30,10 @@ class ArticleFilesData(FilesData, HTMLData):
         return self._extract_html_text(text, selector_title)
 
 
+class ArticleFilesDatas(FilesDatas, HTMLData):
+    _match_class = ArticleFileContentMatch
+
+
 class ArticleAndCommentsFileData(ArticleFileData):
     _match_class = ArticleAndCommentsFileContentMatch
 
@@ -41,6 +46,16 @@ class ArticleCommentCountFileData(ArticleAndCommentsFileData):
     def _get_data_for_text(self, text):
         comments_count = self._extract_html_text(text, selector_comment)
         return self._extract_text(comments_count, pattern_comment_count)
+
+
+class ArticleWordCountFileData(ArticleAndCommentsFileData):
+    _name = 'Words_count_by_article'
+    _key_name = 'Article name'
+    _value_name = 'Word count'
+
+    def _get_data_for_text(self, text):
+        content_text = self._extract_html_text(text, 'div.entry-content')
+        return len(list(set(re.findall("(\S+)*", content_text))))
 
 
 class ArticlePublicationDateFileData(ArticleFileData):
@@ -89,6 +104,28 @@ class AuthorArticleCountFilesData(ArticleFilesData):
 
     def _get_text_identifier(self, text):
         return self._extract_html_text(text, selector_title)
+
+    def _add_data(self, actual_data, new_data):
+        return actual_data + new_data
+
+
+class CommentAuthorCommentCountFilesDatas(FilesDatas, HTMLData):
+    _match_class = ArticleAndCommentsFileContentMatch
+    _name = 'Comment_Author_comments_count'
+    _key_name = 'Comment author name'
+    _value_name = 'Comments count'
+
+    def _get_text_identifier(self, text):
+        return self._extract_html_text(text, selector_title)
+
+    def _get_data_sets(self, text):
+        return self._extract_html(text, 'div#comments-div ol.commentlist > li')
+
+    def _get_data_set_name(self, data_set):
+        return self._extract_html_text(data_set, 'cite:first')
+
+    def _get_data_set_value(self, set_text):
+        return 1
 
     def _add_data(self, actual_data, new_data):
         return actual_data + new_data

@@ -1,5 +1,5 @@
 from sandbox.dalz.data import ArticleCommentCountFileData, AuthorArticleCountFilesData, ArticlePublicationDateFileData, \
-    ArticleAuthorFileData
+    ArticleAuthorFileData, ArticleWordCountFileData, CommentAuthorCommentCountFilesDatas
 from sandbox.dalz.implode import ArticleImplode
 from tde.CSVExporter import CSVExporter
 from tde.Inspector import Inspector
@@ -12,7 +12,9 @@ source_directory = 'sandbox/dalz/Raw_Field_Blog/HTLML_complete/Blog_LaFraise/Blo
 data_classes = [ArticleCommentCountFileData,
                 AuthorArticleCountFilesData,
                 ArticlePublicationDateFileData,
-                ArticleAuthorFileData]
+                ArticleAuthorFileData,
+                ArticleWordCountFileData,
+                CommentAuthorCommentCountFilesDatas]
 
 # Création de l'objet chargé de récupérer les fichiers correspondant aux données recherchés
 inspector_lafraise = Inspector(source=source_directory,

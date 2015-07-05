@@ -1,12 +1,18 @@
-from tde.FileData import FileData
 from tde.exceptions import NoIdentifierMechanismSet
 
 
-class FilesData(FileData):
+class FilesDatasBase():
 
     def __init__(self):
         super().__init__()
         self._text_identifiers_proceeded = []
+
+    def swallow(self, text):
+        for data_set in self._get_data_sets(text):
+            if self._can_take_into_account_text(text):
+                data_set_name = self._get_data_set_name(data_set)
+                data_set_value = self._get_data_set_value(data_set)
+                self._update_data_line(data_set_name, data_set_value)
 
     def _update_data_line(self, data_name, data):
         if data_name not in self._data:

@@ -2,7 +2,7 @@ import re
 from tde.exceptions import CantExtractData
 
 
-class Data:
+class DataBase:
 
     _match_class = None
     _name = None
@@ -29,6 +29,7 @@ class Data:
     def get_value_name(cls):
         return cls._value_name
 
+    # TODO: Maybe in TextData ?
     @classmethod
     def _extract_text(cls, text, expression, groups=(1,), format_extract="%s"):
         sre_match = cls._extract(text, expression)
@@ -49,13 +50,6 @@ class Data:
         self._data = {}
 
     def swallow(self, text):
-        text_data_name = self._get_text_data_name(text)
-        self._update_data_line(text_data_name, self._get_data_for_text(text))
-    
-    def _get_text_data_name(self, text):
-        raise NotImplementedError()
-    
-    def _get_data_for_text(self, text):
         raise NotImplementedError()
 
     def _update_data_line(self, data_name, data):
