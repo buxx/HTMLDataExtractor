@@ -105,7 +105,7 @@ class AuthorArticleCountFilesData(ArticleFilesData):
     def _get_text_identifier(self, text):
         return self._extract_html_text(text, selector_title)
 
-    def _add_data(self, actual_data, new_data):
+    def _add_data(self, actual_data, new_data, data_name):
         return actual_data + new_data
 
 
@@ -127,5 +127,71 @@ class CommentAuthorCommentCountFilesDatas(FilesDatas, HTMLData):
     def _get_data_set_value(self, set_text):
         return 1
 
-    def _add_data(self, actual_data, new_data):
+    def _add_data(self, actual_data, new_data, data_name):
         return actual_data + new_data
+
+
+class AuthorArticlesCommentsCountAverageFilesData(FilesData, HTMLData):
+    _match_class = ArticleAndCommentsFileContentMatch
+    _name = 'Author_articles_comments_count_average'
+    _key_name = 'Author name'
+    _value_name = 'Comments count average'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._data_count = {}
+
+    def _get_text_identifier(self, text):
+        return self._extract_html_text(text, selector_title)
+
+    def _add_data(self, actual_data, new_data, data_name):
+        if data_name not in self._data_count:
+            self._data_count[data_name] = 0
+        self._data_count[data_name] += 1
+        return int(actual_data) + int(new_data)
+
+    def _get_data_for_text(self, text):
+        comments_count = self._extract_html_text(text, selector_comment)
+        return self._extract_text(comments_count, pattern_comment_count)
+
+    def _get_text_data_name(self, text):
+        article_author = self._extract_html_text(text, selector_article_author)
+        return self._extract_text(article_author, pattern_article_author)
+
+    def finalize(self):
+        for data_name in self._data_count:
+            data_count = self._data_count[data_name]
+            self._data[data_name] = int(self._data[data_name]) / data_count
+
+
+class AuthorArticlesWordsCountAverageFilesData(FilesData, HTMLData):
+    _match_class = ArticleAndCommentsFileContentMatch
+    _name = 'Author_articles_words_count_average'
+    _key_name = 'Author name'
+    _value_name = 'Words count average'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._data_count = {}
+
+    def _get_text_identifier(self, text):
+        return self._extract_html_text(text, selector_title)
+
+    def _add_data(self, actual_data, new_data, data_name):
+        if data_name not in self._data_count:
+            self._data_count[data_name] = 0
+        self._data_count[data_name] += 1
+        return int(actual_data) + int(new_data)
+
+    def _get_data_for_text(self, text):
+        content_text = self._extract_html_text(text, 'div.entry-content')
+        return len(list(set(re.findall("(\S+)*", content_text))))
+
+    def _get_text_data_name(self, text):
+        article_author = self._extract_html_text(text, selector_article_author)
+        return self._extract_text(article_author, pattern_article_author)
+
+    def finalize(self):
+        for data_name in self._data_count:
+            data_count = self._data_count[data_name]
+            self._data[data_name] = int(self._data[data_name]) / data_count

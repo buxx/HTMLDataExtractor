@@ -57,3 +57,6 @@ class DataBase:
 
     def get_data(self):
         return self._data
+
+    def finalize(self):
+        pass

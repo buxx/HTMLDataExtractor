@@ -1,6 +1,7 @@
 from sandbox.dalz.data import ArticleCommentCountFileData, AuthorArticleCountFilesData, ArticlePublicationDateFileData, \
-    ArticleAuthorFileData, ArticleWordCountFileData, CommentAuthorCommentCountFilesDatas
-from sandbox.dalz.implode import ArticleImplode
+    ArticleAuthorFileData, ArticleWordCountFileData, CommentAuthorCommentCountFilesDatas, \
+    AuthorArticlesCommentsCountAverageFilesData, AuthorArticlesWordsCountAverageFilesData
+from sandbox.dalz.implode import ArticleImplode, AuthorImplode
 from tde.CSVExporter import CSVExporter
 from tde.Inspector import Inspector
 from tde.Extractor import Extractor
@@ -14,7 +15,9 @@ data_classes = [ArticleCommentCountFileData,
                 ArticlePublicationDateFileData,
                 ArticleAuthorFileData,
                 ArticleWordCountFileData,
-                CommentAuthorCommentCountFilesDatas]
+                CommentAuthorCommentCountFilesDatas,
+                AuthorArticlesCommentsCountAverageFilesData,
+                AuthorArticlesWordsCountAverageFilesData]
 
 # Création de l'objet chargé de récupérer les fichiers correspondant aux données recherchés
 inspector_lafraise = Inspector(source=source_directory,
@@ -28,7 +31,7 @@ extractor = Extractor(inspectors=[inspector_lafraise])
 data_collection = extractor.extract()
 
 # Création de l'objet pour exporter en CSV. On précise la liste des données à compiler dans un fichier.
-csv_convector = CSVExporter(data_collection, implode_classes=[ArticleImplode])
+csv_convector = CSVExporter(data_collection, implode_classes=[ArticleImplode, AuthorImplode])
 
 # Export dans le répertoire output des différentes données extraites
 csv_convector.export('sandbox/dalz/output')

@@ -66,7 +66,7 @@ class CategoryCountTextFilesData(FilesData):
     def _get_text_identifier(self, text):
         return self._extract_text(text, self._get_data_name_pattern())
 
-    def _add_data(self, actual_data, new_data):
+    def _add_data(self, actual_data, new_data, data_name):
         return actual_data + new_data
 
 
@@ -110,7 +110,7 @@ class CategoryCountHTMLFilesData(FilesData, HTMLData):
     def _get_text_identifier(self, text):
         return self._extract_html_text(text, self._get_data_name_pattern())
 
-    def _add_data(self, actual_data, new_data):
+    def _add_data(self, actual_data, new_data, data_name):
         return actual_data + new_data
 
 

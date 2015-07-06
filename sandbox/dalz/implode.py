@@ -1,5 +1,6 @@
 from sandbox.dalz.data import ArticleCommentCountFileData, ArticlePublicationDateFileData, ArticleAuthorFileData, \
-    ArticleWordCountFileData
+    ArticleWordCountFileData, CommentAuthorCommentCountFilesDatas, AuthorArticleCountFilesData, \
+    AuthorArticlesCommentsCountAverageFilesData, AuthorArticlesWordsCountAverageFilesData
 from tde.Implode import Implode
 
 
@@ -9,3 +10,10 @@ class ArticleImplode(Implode):
                      ArticleCommentCountFileData,
                      ArticlePublicationDateFileData,
                      ArticleAuthorFileData)
+
+
+class AuthorImplode(Implode):
+    _name = 'Authors'
+    _data_classes = (AuthorArticleCountFilesData,
+                     AuthorArticlesCommentsCountAverageFilesData,
+                     AuthorArticlesWordsCountAverageFilesData)

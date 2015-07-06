@@ -22,13 +22,19 @@ class Extractor:
         errors = []
 
         for inspector in self._inspectors:
-            for data_instance in data_collection.get_data_instances():
+            inspector_data_instances = data_collection.get_data_instances()
+
+            for data_instance in inspector_data_instances:
                 for file_path in inspector.get_match_files(data_instance.get_match_class()):
                     with open(file_path, 'r') as file_content:
                         try:
                             data_instance.swallow(file_content.read())
                         except CantExtractData as exc:
                             inspector.add_error(Error(file_path, Error.ACTION_DATA, exc))
+
+            for data_instance in inspector_data_instances:
+                data_instance.finalize()
+
             errors.extend(inspector.get_errors())
 
         data_collection.set_errors(errors)
