@@ -13,10 +13,11 @@ class Implode:
     def get_data_classes(cls):
         if not cls._data_classes:
             raise NotImplementedError()
-        return cls._data_classes
+        return sorted(cls._data_classes, key=lambda klass: klass.__name__)
 
     def __init__(self, data_instances):
-        self._data_instances = data_instances
+        # TODO: Use no private attribute instead __class__.__name__ ?
+        self._data_instances = sorted(data_instances, key=lambda instance: instance.__class__.__name__)
 
     def get_key(self):
         key = None

@@ -7,37 +7,37 @@ from tests.src.data import WikipediaLetterCountTextFileData, WikipediaWordCountT
 
 class WikipediaTextArticleImplode(Implode):
     _name = 'Wikipedia_Articles'
-    _data_classes = (WikipediaLetterCountTextFileData,
+    _data_classes = [WikipediaLetterCountTextFileData,
                      WikipediaWordCountTextFileData,
-                     WikipediaSourceTextFileData)
+                     WikipediaSourceTextFileData]
 
 
 class BritannicaTextArticleImplode(Implode):
     _name = 'Britannica_Articles'
-    _data_classes = (BritannicaLetterCountTextFileData,
+    _data_classes = [BritannicaLetterCountTextFileData,
                      BritannicaWordCountTextFileData,
-                     BritannicaSourceTextFileData)
+                     BritannicaSourceTextFileData]
 
 
 class WikipediaHTMLArticleImplode(Implode):
     _name = 'Wikipedia_Articles'
-    _data_classes = (WikipediaLetterCountHTMLFileData,
+    _data_classes = [WikipediaLetterCountHTMLFileData,
                      WikipediaWordCountHTMLFileData,
-                     WikipediaSourceHTMLFileData)
+                     WikipediaSourceHTMLFileData]
 
 
 class BritannicaHTMLArticleImplode(Implode):
     _name = 'Britannica_Articles'
-    _data_classes = (BritannicaLetterCountHTMLFileData,
+    _data_classes = [BritannicaLetterCountHTMLFileData,
                      BritannicaWordCountHTMLFileData,
-                     BritannicaSourceHTMLFileData)
+                     BritannicaSourceHTMLFileData]
 
 # TODO: Confondre des sources entre elles ?
 # class ArticleImplode(Implode):
 #     _name = 'Articles'
-#     _data_classes = (WikipediaLetterCountTextFileData,
+#     _data_classes = [WikipediaLetterCountTextFileData,
 #                      WikipediaWordCountTextFileData,
 #                      WikipediaSourceTextFileData,
 #                      BritannicaLetterCountTextFileData,
 #                      BritannicaWordCountTextFileData,
-#                      BritannicaSourceTextFileData)
+#                      BritannicaSourceTextFileData]

@@ -6,14 +6,14 @@ from tde.Implode import Implode
 
 class ArticleImplode(Implode):
     _name = 'Articles'
-    _data_classes = (ArticleWordCountFileData,
+    _data_classes = [ArticleWordCountFileData,
                      ArticleCommentCountFileData,
                      ArticlePublicationDateFileData,
-                     ArticleAuthorFileData)
+                     ArticleAuthorFileData]
 
 
 class AuthorImplode(Implode):
     _name = 'Authors'
-    _data_classes = (AuthorArticleCountFilesData,
+    _data_classes = [AuthorArticleCountFilesData,
                      AuthorArticlesCommentsCountAverageFilesData,
-                     AuthorArticlesWordsCountAverageFilesData)
+                     AuthorArticlesWordsCountAverageFilesData]
