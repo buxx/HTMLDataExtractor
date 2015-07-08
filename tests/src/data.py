@@ -59,9 +59,7 @@ class CategoryCountTextFilesData(FilesData):
         return self._extract_text(text, 'Catégorie: (\S+).')
 
     def _get_data_for_text(self, text):
-        if self._can_take_into_account_text(text):
-            return 1
-        return 0
+        return 1
 
     def _get_text_identifier(self, text):
         return self._extract_text(text, self._get_data_name_pattern())
@@ -103,9 +101,7 @@ class CategoryCountHTMLFilesData(FilesData, HTMLData):
         return meta_category.attr('content')
 
     def _get_data_for_text(self, text):
-        if self._can_take_into_account_text(text):
-            return 1
-        return 0
+        return 1
 
     def _get_text_identifier(self, text):
         return self._extract_html_text(text, self._get_data_name_pattern())
