@@ -1,7 +1,7 @@
 from sandbox.dalz.data import ArticleCommentCountFileData, AuthorArticleCountFilesData, ArticlePublicationDateFileData, \
     ArticleAuthorFileData, ArticleWordCountFileData, CommentAuthorCommentCountFilesDatas, \
     AuthorArticlesCommentsCountAverageFilesData, AuthorArticlesWordsCountAverageFilesData, \
-    ArticlePublicationHourFileData
+    ArticlePublicationHourFileData, ArticlePatriceCommentCountFileData
 from sandbox.dalz.implode import ArticleImplode, AuthorImplode
 from tde.CSVExporter import CSVExporter
 from tde.Inspector import Inspector
@@ -19,7 +19,8 @@ data_classes = [ArticleCommentCountFileData,
                 ArticleWordCountFileData,
                 CommentAuthorCommentCountFilesDatas,
                 AuthorArticlesCommentsCountAverageFilesData,
-                AuthorArticlesWordsCountAverageFilesData]
+                AuthorArticlesWordsCountAverageFilesData,
+                ArticlePatriceCommentCountFileData]
 
 # Création de l'objet chargé de récupérer les fichiers correspondant aux données recherchés
 inspector_lafraise = Inspector(source=source_directory,

@@ -48,6 +48,16 @@ class ArticleCommentCountFileData(ArticleAndCommentsFileData):
         return self._extract_text(comments_count, pattern_comment_count)
 
 
+class ArticlePatriceCommentCountFileData(ArticleAndCommentsFileData):
+    _name = 'Patrice_Comments_count_by_article'
+    _key_name = 'Article name'
+    _value_name = 'Patrice Comments count'
+
+    def _get_data_for_text(self, text):
+        comments_count = self._extract_html(text, 'ol.commentlist li cite:contains("Patrice")')
+        return comments_count.length
+
+
 class ArticleWordCountFileData(ArticleAndCommentsFileData):
     _name = 'Words_count_by_article'
     _key_name = 'Article name'
