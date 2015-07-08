@@ -1,6 +1,7 @@
 from sandbox.dalz.data import ArticleCommentCountFileData, AuthorArticleCountFilesData, ArticlePublicationDateFileData, \
     ArticleAuthorFileData, ArticleWordCountFileData, CommentAuthorCommentCountFilesDatas, \
-    AuthorArticlesCommentsCountAverageFilesData, AuthorArticlesWordsCountAverageFilesData
+    AuthorArticlesCommentsCountAverageFilesData, AuthorArticlesWordsCountAverageFilesData, \
+    ArticlePublicationHourFileData
 from sandbox.dalz.implode import ArticleImplode, AuthorImplode
 from tde.CSVExporter import CSVExporter
 from tde.Inspector import Inspector
@@ -13,6 +14,7 @@ source_directory = 'sandbox/dalz/Raw_Field_Blog/HTLML_complete/Blog_LaFraise/Blo
 data_classes = [ArticleCommentCountFileData,
                 AuthorArticleCountFilesData,
                 ArticlePublicationDateFileData,
+                ArticlePublicationHourFileData,
                 ArticleAuthorFileData,
                 ArticleWordCountFileData,
                 CommentAuthorCommentCountFilesDatas,
@@ -35,5 +37,3 @@ csv_convector = CSVExporter(data_collection, implode_classes=[ArticleImplode, Au
 
 # Export dans le répertoire output des différentes données extraites
 csv_convector.export('sandbox/dalz/output')
-
-# TODO: Erreurs

@@ -65,17 +65,25 @@ class ArticlePublicationDateFileData(ArticleFileData):
 
     def _get_data_for_text(self, text):
         article_author = self._extract_html_text(text, selector_article_author)
-        article_date = self._extract_text(article_author, pattern_article_publication_date, (2, 3), '%s %s')
-        re_match = re.search('^([0-9]{2})\.([0-9]{2})\.([0-9]{4}) ([0-9]{2}):([0-9]{2})', article_date)
+        article_date = self._extract_text(article_author, pattern_article_publication_date, (2,))
+        re_match = re.search('^([0-9]{2})\.([0-9]{2})\.([0-9]{4})', article_date)
 
         year = int(re_match.group(3))
         month = int(re_match.group(2))
         day = int(re_match.group(1))
-        hour = int(re_match.group(4))
-        minutes = int(re_match.group(5))
 
-        date = datetime(year, month, day, hour, minutes)
-        return date.isoformat(sep=' ')
+        return '%s-%s-%s' % (year, month, day)
+
+
+class ArticlePublicationHourFileData(ArticleFileData):
+    _name = 'Article_publication_hour'
+    _key_name = 'Article name'
+    _value_name = 'Publication hour'
+
+    def _get_data_for_text(self, text):
+        article_author = self._extract_html_text(text, selector_article_author)
+        article_hour = self._extract_text(article_author, pattern_article_publication_date, (3,))
+        return article_hour
 
 
 class ArticleAuthorFileData(ArticleFileData):
